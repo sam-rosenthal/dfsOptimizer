@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { LineUp, PlayerProj } from './tags';
+import { LineUp, PlayerProj } from './Types';
 // import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 
@@ -18,7 +18,7 @@ interface Props {
 
 
 function xxx(OptLineUp: LineUp | null | undefined) {
-  console.log("AAA"+JSON.stringify(OptLineUp));
+  console.log("OptLineup="+JSON.stringify(OptLineUp));
   if (OptLineUp == null) {
     return <TableRow></TableRow>;
   }

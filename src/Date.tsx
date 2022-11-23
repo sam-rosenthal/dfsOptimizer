@@ -6,16 +6,20 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { Container, Switch, Typography } from '@mui/material';
+import { Player } from './Types';
+import { getPlayerList } from './APICalls';
 
 
 interface Props {
   d: Dayjs|null,
-  setDate: React.Dispatch<React.SetStateAction<dayjs.Dayjs | null>>
+  setDate: React.Dispatch<React.SetStateAction<dayjs.Dayjs | null>>,
+  setPlayerList:  React.Dispatch<React.SetStateAction<Player[]>>
 }
 
 export default function MaterialUIPickers(props:Props) {
   const handleChange = (newValue: Dayjs | null) => {
     props.setDate(newValue);
+    getPlayerList(newValue,props.setPlayerList);
   };
 
   return (
