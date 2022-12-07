@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { LineUp, PlayerProj } from './Types';
+import { LineUp, Player} from './Types';
 // import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 
@@ -18,29 +18,32 @@ interface Props {
 
 
 function xxx(OptLineUp: LineUp | null | undefined) {
-  console.log("OptLineup="+JSON.stringify(OptLineUp));
+  // console.log("OptLineup="+JSON.stringify(OptLineUp));
   if (OptLineUp == null) {
     return <TableRow></TableRow>;
   }
+  
   const yyy: JSX.Element[] = [];
   let projectedTotal = 0;
-
+  let salaryTotal = 0;
   Object.entries(OptLineUp).forEach((x) => {
   const position = x[0];
-  const players:PlayerProj[] = x[1];
-  players.forEach((player:PlayerProj) =>{
-    projectedTotal += player.Projection;
+  const players:Player[] = x[1];
+  players.forEach((player:Player) =>{
+    projectedTotal += player.projection;
+    salaryTotal += player.salary;
     const x = 
       <TableRow
-        key={player.Name}
+        key={player.name}
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell component="th" scope="row">
         {position}
         </TableCell>
-        <TableCell align="right">{player.Name}</TableCell>
-        <TableCell align="right">${player.Salary}</TableCell>
-        <TableCell align="right">{player.Projection}</TableCell>
+        <TableCell align="right">{player.name}</TableCell>
+        <TableCell align="right">${player.salary}</TableCell>
+        <TableCell align="right">{player.projection}</TableCell>
+        <TableCell align="right">{player.value}</TableCell>
       </TableRow>;
         yyy.push(x);
       });
@@ -51,8 +54,9 @@ function xxx(OptLineUp: LineUp | null | undefined) {
     >
       <TableCell component="th" scope="row"/>       
       <TableCell align="right"></TableCell>
-      <TableCell align="right"></TableCell>
+      <TableCell align="right"><b>Total Salary: ${salaryTotal}</b></TableCell>
       <TableCell align="right"><b>Total Projected: {projectedTotal.toFixed(2)}</b></TableCell>
+      <TableCell align="right"></TableCell>
     </TableRow>);
     return yyy;
 }
@@ -91,6 +95,7 @@ export default function BasicTable(props: Props) {
             <TableCell align="right">Player</TableCell>
             <TableCell align="right">Salary</TableCell>
             <TableCell align="right">Projection</TableCell>
+            <TableCell align="right">Value</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

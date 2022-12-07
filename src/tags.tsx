@@ -2,27 +2,30 @@ import * as React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useEffect } from 'react';
-import { Box, Button, Container, Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import BasicTable from './Table';
-import MaterialUIPickers, { Site } from './Date';
+import DateSelector, { Site } from './Date';
 import dayjs, { Dayjs } from 'dayjs';
-import { LineUp, LineUp2, Player } from './Types';
+import { LineUp } from './Types';
 import { getOptialLineup, getPlayerList } from './APICalls';
+import Sport from './Sport';
 
 
 
 export default function Tags() {
   const [core, setcore] = React.useState<Array<string> | null>();
-  const [optLineup, setOptLineup] = React.useState<LineUp | LineUp2 | null>();
-  const [playerList, setPlayerList] = React.useState<Array<Player>>([]);
+  const [optLineup, setOptLineup] = React.useState<LineUp | null>();
+  const [playerList, setPlayerList] = React.useState<string[]>([]);
   const[site, setSite] = React.useState("FD");
 
   const [date, setDate] = React.useState<Dayjs | null>(
     dayjs(new Date().toLocaleString()),
   );
+  const [sport, setSport] = React.useState("NBA");
+
   
   useEffect(() => {
-    getPlayerList(date, setPlayerList);
+    getPlayerList(sport, date, setPlayerList);
   }, []);
   
 
@@ -36,15 +39,14 @@ export default function Tags() {
         <Grid item xs={12}>
         <div>{JSON.stringify(core)}
         </div>
-
           <Autocomplete
             multiple
             id="tags-standard"
             options={playerList}
-            getOptionLabel={(option) => option.NAME}
+            getOptionLabel={(option) => option}
             defaultValue={[]}
             onChange={(event, newcore) => {
-              setcore(newcore.map(x => x.NAME));
+              setcore(newcore.map(x => x));
             }}
       
             renderInput={(params) => (
@@ -58,14 +60,17 @@ export default function Tags() {
             )}
           />
         </Grid>
-        <Grid item xs={4}>
-          <MaterialUIPickers d={date} setDate={setDate} setPlayerList={setPlayerList}/>
+        <Grid item xs={2}>
+          <DateSelector sport={sport} d={date} setDate={setDate} setPlayerList={setPlayerList}/>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={2}>
           <Site site={site} setSite={setSite} />
         </Grid>
-        <Grid item xs={4}>
-          <Button variant="contained" onClick={()=>getOptialLineup(core, date, site, setOptLineup)}>Optimize</Button>
+        <Grid item xs={2}>
+          <Sport sport={sport} date={date} setSport={setSport}  setPlayerList={setPlayerList} />
+        </Grid>
+        <Grid item xs={6}>
+          <Button variant="contained" onClick={()=>getOptialLineup(core, date, site, sport, setOptLineup)}>Optimize</Button>
         </Grid>
         <Grid item xs={12}>
           {/* <div>{`Lineup: ${optLineup !== null ? JSON.stringify(optLineup): 'N/A'}`}</div> */}

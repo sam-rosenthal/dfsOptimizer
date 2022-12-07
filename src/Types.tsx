@@ -1,4 +1,12 @@
 export type Player = {
+  "id": string,
+  "position": string,
+  "name": string,
+  "salary": number,
+  "projection": number,
+  "value": number
+}
+export type Player2 = {
   NAME: string,
   POSITION: string,
   SALARY: string
@@ -17,31 +25,5 @@ export type FD = {
   NFL: ["QB","RB","WR","TE","Flex","DEF"]
 }
 export type LineUp = {
-  C: Array<PlayerProj>,
-  PF: Array<PlayerProj>,
-  SF: Array<PlayerProj>,
-  SG: Array<PlayerProj>,
-  PG: Array<PlayerProj>
+  [key: string]: Array<Player>
 }
-export type LineUp2 = {
-  C: Array<PlayerProj>,
-  PF: Array<PlayerProj>,
-  SF: Array<PlayerProj>,
-  SG: Array<PlayerProj>,
-  PG: Array<PlayerProj>,
-  G: Array<PlayerProj>,
-  F: Array<PlayerProj>,
-  UTIL:Array<PlayerProj>
-}
-
-// export type LineUp2 = {
-//   C: Array<PlayerProj>,
-//   PF: Array<PlayerProj>,
-//   SF: Array<PlayerProj>,
-//   SG: Array<PlayerProj>,
-//   PG: Array<PlayerProj>,
-//   G: Array<PlayerProj>,
-//   F: Array<PlayerProj>,
-//   UTIL:Array<PlayerProj>
-// }
-
