@@ -1,8 +1,11 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Suspense } from 'react';
 import './App.css';
-import Tags from './tags';
 import { Container, CssBaseline } from '@mui/material';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './Components/Nav/NavBar';
+import DFS from './Components/DFS/DFS';
+import BetsTable from './Components/Betting/Bets';
+
 
 type Position = string;
 type Players = Array<string>;
@@ -31,26 +34,15 @@ function App() {
 
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <button onClick={callApi}>Call API</button>
-      </header> */}
       <CssBaseline />
-      <Container maxWidth="md">
-        <Tags/>
-      </Container>
-
+      <Navbar/>
+        <Suspense fallback={<div>Loading...</div>}>
+ 
+          <Routes>
+            <Route path ="/" element = {<DFS />} />
+            <Route path ="/Betting" element = {<BetsTable />} />
+          </Routes>
+        </Suspense>
      </div>
   );
 }
